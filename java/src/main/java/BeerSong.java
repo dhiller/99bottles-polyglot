@@ -1,4 +1,6 @@
 import java.text.MessageFormat;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BeerSong {
 
@@ -8,9 +10,8 @@ public class BeerSong {
 
     public String verses(int start, int end) {
         final StringBuilder result = new StringBuilder();
-        for (int i = start; i >= end; i--) {
-            result.append(verse(i));
-        }
+        IntStream.iterate(start, i -> i - 1).limit(end)
+                .mapToObj(this::verse).collect(Collectors.toList()).forEach(result::append);
         return result.toString();
     }
 
